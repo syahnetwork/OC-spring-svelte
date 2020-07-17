@@ -1,33 +1,31 @@
 package com.ocsvelte.clinica.controller;
 
 import com.ocsvelte.clinica.exception.ResourceNotFoundException;
-import com.ocsvelte.clinica.model.Study;
 import com.ocsvelte.clinica.model.StudySubject;
-import com.ocsvelte.clinica.services.StudySubjectService;
+import com.ocsvelte.clinica.services.impl.StudySubjectServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/participant")
 public class StudySubjectController {
 
-    StudySubjectService studySubjectService;
+    StudySubjectServiceImpl studySubjectServiceImpl;
 
     @Autowired
-    public StudySubjectController(StudySubjectService studySubjectService) {
-        this.studySubjectService = studySubjectService;
+    public StudySubjectController(StudySubjectServiceImpl studySubjectServiceImpl) {
+        this.studySubjectServiceImpl = studySubjectServiceImpl;
     }
 
     @GetMapping(value = "/participant")
     public List<StudySubject> getAllStudySubjects() {
-        return studySubjectService.getAllStudySubjects();
+        return studySubjectServiceImpl.getAllStudySubjects();
     }
 
     @GetMapping(value = "/participant/{studySubjectId}")
     public StudySubject getStudySubjectId(@PathVariable("studySubjectId") int studySubjectId) {
-        StudySubject studySubject = studySubjectService.findById(studySubjectId)
+        StudySubject studySubject = studySubjectServiceImpl.findById(studySubjectId)
                 .orElseThrow(() -> new ResourceNotFoundException("Study subject " + studySubjectId + " not found"));
 
         return studySubject;
@@ -35,24 +33,24 @@ public class StudySubjectController {
 
     @PostMapping(value = "/participant")
     public StudySubject addStudySubject(@RequestBody StudySubject studySubject) {
-        return studySubjectService.save(studySubject);
+        return studySubjectServiceImpl.save(studySubject);
     }
 
     @PutMapping(value = "/participant")
     public StudySubject updateStudySubject(@PathVariable("studySubjectId") int studySubjectId, @RequestBody StudySubject studySubject) {
-        StudySubject studySubjectUpdate = studySubjectService.findById(studySubjectId)
+        StudySubject studySubjectUpdate = studySubjectServiceImpl.findById(studySubjectId)
                 .orElseThrow(() -> new ResourceNotFoundException("Study subject " + studySubjectId + " not found"));
 
         //need update
-        return studySubjectService.save(studySubjectUpdate);
+        return studySubjectServiceImpl.save(studySubjectUpdate);
     }
 
     @DeleteMapping(value = "/participant/{studySubjectId}")
     public String deleteStudySubject(@PathVariable("studySubjectId") int studySubjectId) {
-        StudySubject studySubject = studySubjectService.findById(studySubjectId)
+        StudySubject studySubject = studySubjectServiceImpl.findById(studySubjectId)
                 .orElseThrow(() -> new ResourceNotFoundException("Study subject " + studySubjectId + " not found"));
 
-        studySubjectService.deleteById(studySubject.getStudySubjectId());
+        studySubjectServiceImpl.deleteById(studySubject.getStudySubjectId());
         return "Study subject with ID = " + studySubjectId + " deleted";
     }
 

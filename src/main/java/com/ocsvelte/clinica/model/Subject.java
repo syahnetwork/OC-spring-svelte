@@ -8,13 +8,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Subject implements Serializable {
+public class Subject {
 
     @Id
     @Column(name = "subject_id", unique = true, nullable = false)

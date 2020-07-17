@@ -5,13 +5,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Study implements Serializable {
+public class Study {
 
     @Id
     @GeneratedValue(generator = "study-id-generator", strategy = GenerationType.SEQUENCE)

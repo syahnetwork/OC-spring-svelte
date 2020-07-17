@@ -1,13 +1,14 @@
 package com.ocsvelte.clinica.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
-import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 @Entity
@@ -18,7 +19,7 @@ import java.util.Date;
 @EnableJpaRepositories
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudySubject implements Serializable {
+public class StudySubject {
 
     @Id
     @Column(name = "study_subject_id", unique = true, nullable = false)
@@ -33,9 +34,9 @@ public class StudySubject implements Serializable {
     @JoinColumn(name = "study_id")
     private Study study;
 
-    @Type(type = "status")
-    @Column(name = "status_id")
-    private Status status;
+//    @Type(type = "status")
+//    @Column(name = "status_id")
+//    private Status status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id")
