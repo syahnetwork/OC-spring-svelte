@@ -53,6 +53,4 @@ public class StudySubjectController {
         studySubjectServiceImpl.deleteById(studySubject.getStudySubjectId());
         return "Study subject with ID = " + studySubjectId + " deleted";
     }
-
-
 }

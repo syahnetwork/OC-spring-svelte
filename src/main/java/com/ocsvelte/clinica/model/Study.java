@@ -13,8 +13,7 @@ import javax.persistence.*;
 public class Study {
 
     @Id
-    @GeneratedValue(generator = "study-id-generator", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "study-id-generator", sequenceName = "public.study_study_id_seq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "study_id", unique = true, nullable = false)
     private int studyId;
 }

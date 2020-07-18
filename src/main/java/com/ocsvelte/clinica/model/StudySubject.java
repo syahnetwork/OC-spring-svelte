@@ -1,21 +1,17 @@
 package com.ocsvelte.clinica.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "study_subject")
-@GenericGenerator(name = "id-generator", strategy = "native", parameters = {@Parameter(name = "sequence_name", value = "study_subject_study_subject_id_seq")})
-@Getter
-@Setter
+@Table(name = "study_subject", uniqueConstraints = @UniqueConstraint(columnNames = "oc_oid"))
+@Data
 @EnableJpaRepositories
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,32 +19,40 @@ public class StudySubject {
 
     @Id
     @Column(name = "study_subject_id", unique = true, nullable = false)
-    @GeneratedValue(generator = "id_generator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int studySubjectId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id")
     private UserAccount userAccount;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "study_id")
     private Study study;
 
-//    @Type(type = "status")
 //    @Column(name = "status_id")
-//    private Status status;
+//    private int status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "subject_id")
     private Subject subject;
 
     private String label;
     private String secondaryLabel;
-    private Date enrollmentDate;
-    private Date dateCreated;
     private Date dateUpdated;
     private Integer updateId;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date enrollmentDate;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateCreated;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserAccount userId;
+
+    @Column(name = "oc_oid", unique = true, nullable = false, length = 40)
     private String ocOid;
-
-
 }

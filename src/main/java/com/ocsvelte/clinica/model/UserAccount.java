@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
@@ -17,6 +14,9 @@ public class UserAccount {
 
     @Id
     @Column(name = "user_id", unique = true, nullable = false)
-    @GeneratedValue(generator = "id-generator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
+
+//    @OneToMany(mappedBy = "userAccount")
+//    private List<StudySubject> studySubjectList;
 }
