@@ -10,12 +10,17 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "user_account", schema = "public")
 public class UserAccount {
 
     @Id
     @Column(name = "user_id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
+    private UserAccount userAccount;
 
 //    @OneToMany(mappedBy = "userAccount")
 //    private List<StudySubject> studySubjectList;

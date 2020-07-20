@@ -22,18 +22,18 @@ public class StudySubject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int studySubjectId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "owner_id")
     private UserAccount userAccount;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "study_id")
     private Study study;
 
 //    @Column(name = "status_id")
 //    private int status;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "subject_id")
     private Subject subject;
 
